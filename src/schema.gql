@@ -1,0 +1,55 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type State {
+  """State id"""
+  id: String!
+
+  """State name"""
+  name: String!
+}
+
+type City {
+  """City id"""
+  id: String!
+
+  """City name"""
+  name: String!
+
+  """State the city is in"""
+  state: State!
+}
+
+type University {
+  """Univeristy id"""
+  id: String!
+
+  """University name"""
+  name: String!
+
+  """City the university is in"""
+  city: City!
+}
+
+type Query {
+  universities: [University!]!
+  university(id: Int!): University!
+}
+
+type Mutation {
+  createUniversity(createUniversityInput: CreateUniversityInput!): University!
+  updateUniversity(updateUniversityInput: UpdateUniversityInput!): University!
+  removeUniversity(id: Int!): University!
+}
+
+input CreateUniversityInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateUniversityInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
