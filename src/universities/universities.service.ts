@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUniversityInput } from './dto/create-university.input';
 import { UpdateUniversityInput } from './dto/update-university.input';
+import { City } from './entities/city.entity';
+import { State } from './entities/state.entity';
+import { University } from './entities/university.entity';
 
 @Injectable()
 export class UniversitiesService {
@@ -9,7 +12,21 @@ export class UniversitiesService {
   }
 
   findAll() {
-    return `This action returns all universities`;
+    const state: State = new State();
+    state.id = '1';
+    state.name = 'Washington';
+    const city: City = new City();
+    city.id = '1';
+    city.name = 'Seattle';
+    city.state = state;
+
+    const university: University = new University();
+    university.id = '1';
+    university.name = 'UW';
+
+    university.city = city;
+
+    return [university];
   }
 
   findOne(id: number) {
