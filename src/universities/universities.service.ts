@@ -19,7 +19,7 @@ export class UniversitiesService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} university`;
+    return this.dataService.getUniversityById(id);
   }
 
   update(id: number, updateUniversityInput: UpdateUniversityInput) {

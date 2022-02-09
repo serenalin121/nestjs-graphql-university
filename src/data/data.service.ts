@@ -34,4 +34,8 @@ export class DataService {
   getUniversities() {
     return Object.values(this.universities);
   }
+
+  getUniversityById(id) {
+    return this.universities[id];
+  }
 }
