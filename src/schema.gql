@@ -44,12 +44,18 @@ type Mutation {
 }
 
 input CreateUniversityInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """university name"""
+  name: String!
+
+  """city id"""
+  cityId: Int!
 }
 
 input UpdateUniversityInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  """university name"""
+  name: String
+
+  """city id"""
+  cityId: Int
   id: Int!
 }

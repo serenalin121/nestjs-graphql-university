@@ -9,6 +9,7 @@ export class DataService {
   private universities: { [id: number]: University } = {};
   private states: { [id: number]: State } = {};
   private city: { [id: number]: City } = {};
+  private currentUniversityId = 0;
 
   constructor() {
     data.universities.forEach((university) => {
@@ -28,6 +29,12 @@ export class DataService {
       newUniversity.name = university.name;
       newUniversity.city = newCity;
       this.universities[newUniversity.id] = newUniversity;
+
+      // Store the maximum university id from json
+      this.currentUniversityId = Math.max(
+        this.currentUniversityId,
+        university.id,
+      );
     });
   }
 
@@ -35,7 +42,25 @@ export class DataService {
     return Object.values(this.universities);
   }
 
-  getUniversityById(id) {
+  getUniversityById(id: number) {
     return this.universities[id];
+  }
+
+  /**
+   * creates a new univerisity using cityId
+   * This assumes user is selecting from a list of cityId/cityName
+   * TODO: consider adding an option for user to add university using cityName + stateId
+   * @param name - name of university
+   * @param cityId - cityId
+   */
+  addUniversity(name: string, cityId: number) {
+    const newUniversity = new University();
+    newUniversity.name = name;
+    this.currentUniversityId++;
+    newUniversity.id = this.currentUniversityId;
+    newUniversity.city = this.city[cityId];
+
+    this.universities[newUniversity.id] = newUniversity;
+    return newUniversity;
   }
 }
