@@ -4,7 +4,7 @@
 
 type State {
   """State id"""
-  id: String!
+  id: Int!
 
   """State name"""
   name: String!
@@ -12,7 +12,7 @@ type State {
 
 type City {
   """City id"""
-  id: String!
+  id: Int!
 
   """City name"""
   name: String!
@@ -23,7 +23,7 @@ type City {
 
 type University {
   """Univeristy id"""
-  id: String!
+  id: Int!
 
   """University name"""
   name: String!

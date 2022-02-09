@@ -15,21 +15,7 @@ export class UniversitiesService {
   }
 
   findAll() {
-    const state: State = new State();
-    state.id = '1';
-    state.name = 'Washington';
-    const city: City = new City();
-    city.id = '1';
-    city.name = 'Seattle';
-    city.state = state;
-
-    const university: University = new University();
-    university.id = '1';
-    university.name = 'UW';
-
-    university.city = city;
-
-    return [university];
+    return this.dataService.getUniversities();
   }
 
   findOne(id: number) {
