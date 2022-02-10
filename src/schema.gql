@@ -57,5 +57,7 @@ input UpdateUniversityInput {
 
   """city id"""
   cityId: Int
+
+  """university id"""
   id: Int!
 }

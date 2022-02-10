@@ -23,7 +23,10 @@ export class UniversitiesService {
   }
 
   update(id: number, updateUniversityInput: UpdateUniversityInput) {
-    return `This action updates a #${id} university`;
+    return this.dataService.updateUniversity(
+      updateUniversityInput.id,
+      updateUniversityInput.name,
+    );
   }
 
   remove(id: number) {

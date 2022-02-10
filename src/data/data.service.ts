@@ -52,6 +52,7 @@ export class DataService {
    * TODO: consider adding an option for user to add university using cityName + stateId
    * @param name - name of university
    * @param cityId - cityId
+   * @returns - new university
    */
   addUniversity(name: string, cityId: number) {
     const newUniversity = new University();
@@ -62,5 +63,17 @@ export class DataService {
 
     this.universities[newUniversity.id] = newUniversity;
     return newUniversity;
+  }
+
+  /**
+   * update university's name
+   * TODO: allow users to update univeristy's city and state?
+   * @param id - id of the university to be updated
+   * @param name - the new name of the university
+   * @returns - updated university
+   */
+  updateUniversity(id: number, name: string) {
+    this.universities[id].name = name;
+    return this.universities[id];
   }
 }
