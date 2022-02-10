@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DataService } from 'src/data/data.service';
+import { CreateUniversityWithNewCityInput } from './dto/create-university-with-new-city.input';
 import { CreateUniversityInput } from './dto/create-university.input';
 import { UpdateUniversityInput } from './dto/update-university.input';
 
@@ -11,6 +12,16 @@ export class UniversitiesService {
     return this.dataService.addUniversity(
       createUniversityInput.name,
       createUniversityInput.cityId,
+    );
+  }
+
+  createWithNewCity(
+    createUniversityWithNewCityInput: CreateUniversityWithNewCityInput,
+  ) {
+    return this.dataService.addUniversityWithCityName(
+      createUniversityWithNewCityInput.name,
+      createUniversityWithNewCityInput.cityName,
+      createUniversityWithNewCityInput.stateId,
     );
   }
 

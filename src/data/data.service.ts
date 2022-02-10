@@ -10,6 +10,7 @@ export class DataService {
   private states: { [id: number]: State } = {};
   private city: { [id: number]: City } = {};
   private currentUniversityId = 0;
+  private currentCityId = 0;
 
   constructor() {
     data.universities.forEach((university) => {
@@ -35,6 +36,9 @@ export class DataService {
         this.currentUniversityId,
         university.id,
       );
+
+      // Store the maximum city id from json
+      this.currentCityId = Math.max(this.currentCityId, newCity.id);
     });
   }
 
@@ -60,6 +64,31 @@ export class DataService {
     this.currentUniversityId++;
     newUniversity.id = this.currentUniversityId;
     newUniversity.city = this.city[cityId];
+
+    this.universities[newUniversity.id] = newUniversity;
+    return newUniversity;
+  }
+
+  /**
+   * create a new university using cityName + stateId
+   * This assumes user added a new city when create a new university
+   * @param name - name of university
+   * @param cityName - new city name
+   * @param stateId - state where the city at
+   * @returns - new university
+   */
+  addUniversityWithCityName(name: string, cityName: string, stateId: number) {
+    const newCity = new City();
+    newCity.name = cityName;
+    newCity.state = this.states[stateId];
+    this.currentCityId++;
+    newCity.id = this.currentCityId;
+
+    const newUniversity = new University();
+    newUniversity.name = name;
+    newUniversity.city = newCity;
+    this.currentUniversityId++;
+    newUniversity.id = this.currentUniversityId;
 
     this.universities[newUniversity.id] = newUniversity;
     return newUniversity;

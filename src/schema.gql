@@ -39,6 +39,7 @@ type Query {
 
 type Mutation {
   createUniversity(createUniversityInput: CreateUniversityInput!): University!
+  createUniversityWithNewCity(createUniversityWithNewCityInput: CreateUniversityWithNewCityInput!): University!
   updateUniversity(updateUniversityInput: UpdateUniversityInput!): University!
   removeUniversity(id: Int!): University!
 }
@@ -49,6 +50,17 @@ input CreateUniversityInput {
 
   """city id"""
   cityId: Int!
+}
+
+input CreateUniversityWithNewCityInput {
+  """university name"""
+  name: String!
+
+  """city name"""
+  cityName: String!
+
+  """state id"""
+  stateId: Int!
 }
 
 input UpdateUniversityInput {
