@@ -32,9 +32,21 @@ type University {
   city: City!
 }
 
+type User {
+  """user id"""
+  id: Int!
+
+  """user name"""
+  username: String!
+
+  """user password"""
+  password: String!
+}
+
 type Query {
   universities: [University!]!
   university(id: Int!): University!
+  user(username: String!): User!
 }
 
 type Mutation {
