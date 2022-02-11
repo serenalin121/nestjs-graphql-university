@@ -43,6 +43,11 @@ type User {
   password: String!
 }
 
+type Login {
+  access_token: String!
+  user: User!
+}
+
 type Query {
   universities: [University!]!
   university(id: Int!): University!
@@ -54,6 +59,7 @@ type Mutation {
   createUniversityWithNewCity(createUniversityWithNewCityInput: CreateUniversityWithNewCityInput!): University!
   updateUniversity(updateUniversityInput: UpdateUniversityInput!): University!
   removeUniversity(id: Int!): University!
+  login(loginInput: LoginInput!): Login!
 }
 
 input CreateUniversityInput {
@@ -84,4 +90,12 @@ input UpdateUniversityInput {
 
   """university id"""
   id: Int!
+}
+
+input LoginInput {
+  """user name"""
+  username: String!
+
+  """user password"""
+  password: String!
 }
