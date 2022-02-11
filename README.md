@@ -1,31 +1,3 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
 ## Installation
 
 ```bash
@@ -35,39 +7,163 @@ $ npm install
 ## Running the app
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+$ npm start
 ```
 
-## Test
+Go to: [http://localhost:3000/graphql](http://localhost:3000/graphql) for GraphQL Playground
+<br>
+<br>
 
-```bash
-# unit tests
-$ npm run test
+## What was implemented:
 
-# e2e tests
-$ npm run test:e2e
+1. Generate boilerplate CRUD code for universitites and users `(nest g resource)`
+1. Translate dummy data to three entites: University, City, State
+1. Impelement query to get all Universities and get one university by id
+1. Impelement mutation to create a new university, two methods were created depending on what we want to do on the frontend
+   - create a new university by city id (e.g. user select city from auto suggest)
+   - create a new university by adding a new city using city name and state id (e.g. choosing state from 50 options)
+1. Update an existing university (name only)
+1. Create user dummy data
+1. Implement user login with passport local and passport jwt
+1. Guard university mutations by adding a JWT guard
+   <br>
+   <br>
 
-# test coverage
-$ npm run test:cov
+## To Do List
+
+- Update an existing university's city
+- Error handlding (e.g. avoid internal server error when query doesn't find anything)
+- Authrorization on mutation (e.g. add isAdmin to User and guard to check isAdmin in canActivate)
+- bcrypt the password
+- Move jwt secret to safer place (e.g. If deploy to Heroku, add to Config Vars and access using process.env)
+  <br>
+  <br>
+
+## Example Playground Queries
+
+Go to: [http://localhost:3000/graphql](http://localhost:3000/graphql) for GraphQL Playground
+
+### Get All Universities
+
+```
+{
+  universities {
+    id,
+    name,
+    city {
+      id,
+      name
+      state {
+        id,
+        name
+      }
+    }
+  }
+}
+
 ```
 
-## Support
+### Get One Univeristy
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```
+{
+  university(id: 1){
+    id,
+    name,
+    city {
+      id,
+      name
+      state {
+        id,
+        name
+      }
+    }
+  }
+}
+```
 
-## Stay in touch
+### User Login (gets jwt token)
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```
+mutation{
+  login(loginInput:{
+    username: "user1",
+    password: "password"
+  }){
+  	access_token
+  }
+}
+```
 
-## License
+### Send query with authentication header
 
-Nest is [MIT licensed](LICENSE).
+```
+{"Authorization": "Bearer <access_token>"}
+```
+
+### Create University with cityId (Authentication needed)
+
+```
+mutation {
+  createUniversity(createUniversityInput: {
+    name: "New+Uni",
+    cityId: 8,
+  }) {
+		id,
+    name,
+     city{
+      name,
+      id
+      state{
+        name,
+        id
+      }
+    }
+  }
+}
+```
+
+### Create University with cityName + stateId (Authentication needed)
+
+```
+mutation {
+  createUniversityWithNewCity(createUniversityWithNewCityInput: {
+    name: "New University",
+    cityName: "Bellevue",
+    stateId:1,
+  }) {
+		id,
+    name,
+    city{
+      name,
+      id
+      state{
+        name,
+        id
+      }
+    }
+  }
+}
+```
+
+### Update University name (Authentication needed)
+
+```
+mutation {
+  updateUniversity(updateUniversityInput: {
+    id: 1,
+    name: "Updated University",
+  }) {
+		id,
+    name,
+    city{
+      name,
+      id
+      state{
+        name,
+        id
+      }
+    }
+  }
+}
+```
