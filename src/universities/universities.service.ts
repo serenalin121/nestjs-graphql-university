@@ -39,8 +39,4 @@ export class UniversitiesService {
       updateUniversityInput.name,
     );
   }
-
-  remove(id: number) {
-    return `This action removes a #${id} university`;
-  }
 }

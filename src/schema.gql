@@ -58,7 +58,6 @@ type Mutation {
   createUniversity(createUniversityInput: CreateUniversityInput!): University!
   createUniversityWithNewCity(createUniversityWithNewCityInput: CreateUniversityWithNewCityInput!): University!
   updateUniversity(updateUniversityInput: UpdateUniversityInput!): University!
-  removeUniversity(id: Int!): University!
   login(loginInput: LoginInput!): Login!
 }
 
