@@ -24,21 +24,19 @@ export class DataService {
       newCity.name = university.city.name;
       newCity.state = newState;
       this.city[newCity.id] = newCity;
+      // Store the maximum city id from json
+      this.currentCityId = Math.max(this.currentCityId, newCity.id);
 
       const newUniversity = new University();
       newUniversity.id = university.id;
       newUniversity.name = university.name;
       newUniversity.city = newCity;
       this.universities[newUniversity.id] = newUniversity;
-
       // Store the maximum university id from json
       this.currentUniversityId = Math.max(
         this.currentUniversityId,
         university.id,
       );
-
-      // Store the maximum city id from json
-      this.currentCityId = Math.max(this.currentCityId, newCity.id);
     });
   }
 
