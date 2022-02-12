@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
-import { LoginInput } from './dto/login.input';
 
 @Injectable()
 export class AuthService {
@@ -10,6 +9,12 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
+  /**
+   * check if user exists and if the password matches
+   * @param username - user inputted username
+   * @param password - user inputted password
+   * @returns - user if user exists and password matches, null otherwise
+   */
   validateUser(username: string, password: string) {
     const user = this.usersService.findOne(username);
 
@@ -20,8 +25,13 @@ export class AuthService {
     return null;
   }
 
-  login(loginInput: LoginInput) {
-    const user = this.usersService.findOne(loginInput.username);
+  /**
+   * create access token for user (user should be authenicated already through login guard)
+   * @param username - username
+   * @returns - user with access token
+   */
+  createUserWithAccessToken(username: string) {
+    const user = this.usersService.findOne(username);
     const { password, ...result } = user;
 
     return {

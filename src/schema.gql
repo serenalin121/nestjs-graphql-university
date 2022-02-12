@@ -51,7 +51,6 @@ type Login {
 type Query {
   universities: [University!]!
   university(id: Int!): University!
-  user(username: String!): User!
 }
 
 type Mutation {

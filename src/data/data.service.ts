@@ -6,13 +6,17 @@ import * as data from './universities.json';
 
 @Injectable()
 export class DataService {
+  // Lookup table for university/state/city by id
   private universities: { [id: number]: University } = {};
   private states: { [id: number]: State } = {};
   private city: { [id: number]: City } = {};
+
+  // store the highest id number, to create a new university/city, increment this by 1 and assign as id
   private currentUniversityId = 0;
   private currentCityId = 0;
 
   constructor() {
+    // translate date to lookup table
     data.universities.forEach((university) => {
       const newState = new State();
       newState.id = university.city.state.id;
